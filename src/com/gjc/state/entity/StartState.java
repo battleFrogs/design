@@ -6,18 +6,19 @@ public class StartState extends State {
     @Override
     public void currentHandle(Context context) {
         System.out.println("startState处理中");
-        if (context.getValue() < 40) {
-            System.out.println("处理完毕");
+        context.setValue(context.getValue() - 10);
+        if (context.getValue() > 20) {
+            nextHandle(context, new MiddleState());
         }else{
-            nextHandle(context);
+            nextHandle(context, new EndState());
         }
 
     }
 
 
     @Override
-    public void nextHandle(Context context) {
-        context.setCurrentState(new MiddleState());
+    public void nextHandle(Context context, State state) {
+        context.setCurrentState(state);
         context.handle();
     }
 }
